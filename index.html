@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -9,37 +9,175 @@
       href="https://fonts.googleapis.com/css2?family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./index.css" />
-    <title>💥Boom Number Game💥</title>
+    <link
+      rel="shortcut icon"
+      href="./images/icons/boom.png"
+      type="image/x-icon"
+    />
+
+    <link rel="stylesheet" href="./src/output.css" />
+    <title>Boom Number Game</title>
   </head>
-  <body>
-    <main class="main">
-      <h2 class="title">Boom Number Game</h2>
-      <div class="line"></div>
-      <p class="text">Find The Boom Number</p>
-      <p class="text">Input Any Number (1-100):</p>
+  <body
+    class="flex flex-col gap-5 bg-[#120830] bg-linear-to-r from-[#120830] from-10% via-[#261147] to-[#120830] to-90% px-2 text-white/80 items-center"
+  >
+    <!-- 1. Logo -->
+    <header class="title">
+      <img src="./images/logo.webp" alt="Boom number logo" />
+    </header>
 
-      <!-- Guessing number input -->
-      <input type="number" id="guess" min="1" max="20" />
-      <div class="">
-        <button onclick="checkGuess()" id="checkBtn">Check</button>
-        <button onclick="reset()">Reset</button>
+    <!-- 2. Main -->
+    <main
+      class="container flex flex-col items-center gap-5 rounded-2xl border border-[#837bbb] bg-[#101231] p-4"
+    >
+      <!-- 2.1 Main Input -->
+      <h1 class="text text-xl text-[#837bbb] font-semibold">
+        Guess the Number
+      </h1>
+      <div class="describtion flex flex-col items-center">
+        <p class="text-center">I have picked a number between 1 and 100</p>
+        <p>Try to guess it!</p>
       </div>
-      <p class="text">🏁your score:🏁</p>
-      <span id="score" class="text">10</span>
-      <p id="result"></p>
+      <div class="input-container relative w-full">
+        <input
+          type="number"
+          class="p-2 border border-[#837bbb] rounded-xl w-full focus:outline-none"
+          placeholder="Enter your guess..."
+        />
+        <button
+          class="rounded-lg h-full px-2 absolute right-0 -top-0.5 bg-linear-to-t from-[#451da1] to-[#6438cb] shadow-[0_2px_0_rgba(42,17,95,1),0_5px_12px_rgba(0,0,0,0.3),inset_0_2px_0_rgba(255,255,255,0.2)] cursor-pointer active:shadow-none transition active:translate-y-0.5 font-semibold"
+        >
+          CHECK
+        </button>
+      </div>
 
-      <div class="line"></div>
+      <!-- 2.2 Main Hint -->
+      <div
+        class="hint flex flex-col gap-4 rounded-lg py-5 px-3 items-center border border-[#837bbb] w-full"
+      >
+        <h2 class="text-xl text-[#837bbb] font-semibold">--- Hint ---</h2>
+        <div class="flex justify-between items-center gap-2 w-full">
+          <!-- red box -->
+          <div
+            class="too-high flex w-[30%] flex-col items-center py-4 px-1 rounded-lg bg-[#e1000044] border-2 border-[#d94a43] shadow-[0_0_15px_rgb(217,75,67)]"
+          >
+            <div>
+              <img
+                src="./images/red-arrow-nobg.png"
+                alt="red-arrow"
+                class="max-w-6"
+              />
+            </div>
+            <p class="text-center font-semibold">Too High</p>
+          </div>
 
-      <!-- Boom number input -->
-      <p class="text">Found it?</p>
-      <p class="text check">Put it in here, Check!</p>
-      <input type="number" id="finalGuess" min="1" max="100" />
+          <!-- question mark -->
+          <div
+            class="question-mark flex justify-center items-center w-[38%] aspect-square border-2 border-[#837bbb] bg-[#10122f] rounded-full p-10 shadow-[0_0_15px_rgba(90, 85, 140, 0.8)]"
+          >
+            <p class="text-8xl font-bold leading-0">?</p>
+          </div>
 
-      <button onclick="checkFinal()" id="checkFinalBtn">Check</button>
-      <p id="finalResult"></p>
-      <div class="line"></div>
+          <!-- blue box -->
+          <div
+            class="too-low flex w-[30%] flex-col items-center py-4 px-1 rounded-lg bg-[rgb(38,56,120)] border-2 border-[#5985cf] shadow-[0_0_15px_rgb(38,56,120)]"
+          >
+            <div>
+              <img
+                src="./images/blue-arrow-nobg.png"
+                alt="red-arrow"
+                class="max-w-6"
+              />
+            </div>
+            <p class="text-center font-semibold">Too Low</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.3 Main Check Btn  -->
+      <button
+        class="flex rounded-xl p-2 bg-[rgb(227,188,89)] w-full justify-center gap-2 shadow-[0_3px_0_rgb(180,140,50),0_8px_10px_rgba(0,0,0,0.35),inset_0_4px_0_rgba(255,255,255,0.3)] cursor-pointer active:shadow-none transition-all active:translate-y-0.5"
+      >
+        <img src="./images/cannon-ball.png" alt="" class="w-12" />
+        <div class="text text-black">
+          <p class="text-xl font-bold">CHECK BOOM</p>
+          <p class="font-semibold">Is it a boom number?</p>
+        </div>
+      </button>
+
+      <!-- correct guess -->
+      <div
+        class="relative flex flex-col items-center gap-2 w-full rounded-xl border-2 border-[#5f7862] bg-[#162118] p-10 overflow-hidden"
+      >
+        <img
+          src="./images/ornamen.png"
+          alt=""
+          class="absolute left-0 top-0 w-full"
+        />
+
+        <div class="flex gap-4 items-center">
+          <img
+            src="./images/cannon-ball.png"
+            alt=""
+            class="w-15 drop-shadow-[0_0_10px_#80c359]"
+          />
+          <p
+            class="text-[#9be073] text-5xl font-semibold text-shadow-[0_0_10px_#80c359]"
+          >
+            Yeay!!
+          </p>
+        </div>
+        <p class="font-semibold text-center">
+          34 is the
+          <span class="text-[#9be073] drop-shadow-[0_0_10px_#80c359]"
+            >BOOM NUMBER!</span
+          >
+        </p>
+      </div>
+
+      <!-- incorrect guess -->
+      <div
+        class="relative flex flex-col items-center gap-2 w-full rounded-xl border-2 border-[#4c140f] bg-[#1e1e1e] p-10 overflow-hidden"
+      >
+        <div class="flex gap-4 items-center">
+          <img
+            src="./images/cannon-ball-fail.png"
+            alt=""
+            class="w-15 drop-shadow-[0_0_10px_#d3584b]"
+          />
+          <p
+            class="text-[#d3584b] text-5xl font-semibold text-shadow-[0_0_10px_#d3584b]"
+          >
+            You lose!!
+          </p>
+        </div>
+        <p class="font-semibold text-center">
+          34 is not the
+          <span class="text-[#d3584b] drop-shadow-[0_0_10px_#d3584b]"
+            >BOOM NUMBER!</span
+          >
+        </p>
+      </div>
     </main>
+
+    <!-- 3. Play again button -->
+    <button
+      class="rounded-lg flex items-center justify-center gap-1 p-1 w-full bg-linear-to-t from-[#451da1] to-[#7046d1] shadow-[0_3px_0_rgba(42,17,95,1),0_5px_12px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.2)] cursor-pointer active:shadow-none transition active:translate-y-0.5 font-semibold text-lg"
+    >
+      <img src="./images/again-symbol.png" alt="" class="w-10" />
+      PLAY AGAIN
+    </button>
+
+    <!-- footer -->
+    <footer class="m-auto text-white/80">
+      &copy 2026 Created by
+      <a
+        href="https://github.com/Hary300"
+        target="_blank"
+        class="text-amber-300"
+        >Hary300</a
+      >
+    </footer>
     <script src="./index.js"></script>
   </body>
 </html>

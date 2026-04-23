@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "@tailwindcss/cli": "^4.2.4",
+    "tailwindcss": "^4.2.4"
+  },
+  "name": "angka-boom",
+  "version": "1.0.0",
+  "description": "[💥Boom Number Game💥](https://hary300.github.io/Boom-Number/)",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "npx @tailwindcss/cli -i ./src/input.css -o ./src/output.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
