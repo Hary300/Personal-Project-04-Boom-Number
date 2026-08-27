@@ -1,1 +1,9 @@
 @import 'tailwindcss';
+
+.glass-effect {
+  @apply border border-indigo-300/20 bg-linear-to-b from-[#181a48]/70 to-[#0e0f28]/90 backdrop-blur-xl shadow-[inset_0_1px_1px_0_rgba(255,255,255,0.25),inset_0_0_20px_0_rgba(99,102,241,0.15),0_15px_30px_-5px_rgba(0,0,0,0.7)];
+}
+
+.three-dimension-effect {
+  @apply shadow-[inset_0_1px_1px_0_rgba(255,255,255,0.25),inset_0_0_20px_0_rgba(99,102,241,0.15),0_5px_5px_-5px_rgba(0,0,0,0.7)];
+}
