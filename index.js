@@ -109,3 +109,6 @@ submitButton.addEventListener('click', () => {
 boomCheckButton.addEventListener('click', () => {
   checkBoom();
 });
+inputNumberField.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') checkGuess();
+});
