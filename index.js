@@ -1,75 +1,111 @@
 'use strict';
 
-// Define the boom number
-let boom = Math.floor(Math.random() * 100) + 1;
-console.log('Boom number:', boom); // visible in console
-let count = 10;
+const errorMessageElement = document.querySelector('#error-message');
+const inputNumberField = document.querySelector('#input-number-field');
+const submitButton = document.querySelector('#submit');
+const tooHighElement = document.querySelector('#too-high');
+const hpElement = document.querySelector('#hp');
+const tooLowElement = document.querySelector('#too-low');
+const foundItElement = document.querySelector('#found-it');
+const correctResultElement = document.querySelector('#correct-result');
+const incorrectResultElement = document.querySelector('#incorrect-result');
+const boomCheckButton = document.querySelector('#boom-check');
+const playAgainButton = document.querySelector('#play-again-button');
+
+let hp = 10;
+hpElement.textContent = hp;
+
+let boomNumber = Math.floor(Math.random() * 100) + 1;
 
 function checkGuess() {
-  if (count > 0) {
-    count--; // kurangi 1
-  } else {
-    count = 10; // reset ke 10 kalau sudah 0
+  hp--;
+  if (hp <= 0) {
+    foundItElement.classList.add('hidden');
+    incorrectResultElement.classList.remove('hidden');
+    const boomNumberElement =
+      incorrectResultElement.querySelector('.boom-number');
+    boomNumberElement.textContent = boomNumber;
+    submitButton.disabled = true;
+    boomCheckButton.disabled = true;
+
+    boomNumber = Math.floor(Math.random() * 100) + 1;
+    return;
   }
-  document.getElementById('score').innerText = count;
-
-  if (count === 0) {
-    document.getElementById('result').textContent =
-      "💥 BOOM! You're dead! The Boom Number: " + boom;
-    document.getElementsById('checkBtn').disabled = true;
-    document.getElementsById('checkFinalBtn').disabled = true;
-
-    boom = Math.floor(Math.random() * 100) + 1;
-    console.log('New boom number:', boom);
+  const userInputValue = inputNumberField.value;
+  if (userInputValue === '') {
+    inputNumberField.classList.add('border', 'border-red-500');
+    errorMessageElement.classList.add('opacity-100');
     return;
   }
 
-  let userGuess = parseInt(document.getElementById('guess').value);
-  if (userGuess < boom) {
-    document.getElementById('result').textContent = '⬆️ Going up';
-  } else if (userGuess > boom) {
-    document.getElementById('result').textContent = '⬇️ Going down';
+  inputNumberField.classList.remove('border', 'border-red-500');
+  errorMessageElement.classList.remove('opacity-100');
+
+  const userNumberInput = Number(inputNumberField.value);
+
+  if (userNumberInput < boomNumber) {
+    tooHighElement.classList.remove('glow-red');
+    tooLowElement.classList.add('glow-blue');
+  } else if (userNumberInput > boomNumber) {
+    tooLowElement.classList.remove('glow-blue');
+    tooHighElement.classList.add('glow-red');
   } else {
-    document.getElementById('result').textContent =
-      "💥 BOOM! You're dead! The Boom Number: " + boom;
-    document.getElementById('score').innerText = '💀';
-    document.getElementsById('checkBtn').disabled = true;
-    document.getElementsById('checkFinalBtn').disabled = true;
-    // reset game
-    boom = Math.floor(Math.random() * 100) + 1;
-    console.log('New boom number:', boom);
+    tooLowElement.classList.remove('glow-blue');
+    tooHighElement.classList.remove('glow-red');
   }
+  hpElement.textContent = hp;
 }
 
 function reset() {
-  count = 10;
-  boom = Math.floor(Math.random() * 100) + 1;
-  document.getElementById('score').innerText = count;
-  document.getElementById('result').textContent = '';
-  document.getElementById('finalResult').textContent = '';
-  document.getElementsById('checkBtn').disabled = false;
-  document.getElementsById('checkFinalBtn').disabled = false;
+  hp = 10;
+  boomNumber = Math.floor(Math.random() * 100) + 1;
+  inputNumberField.value = '';
+  hpElement.textContent = hp;
+  correctResultElement.classList.add('hidden');
+  incorrectResultElement.classList.add('hidden');
+  tooLowElement.classList.remove('glow-blue');
+  tooHighElement.classList.remove('glow-red');
+  foundItElement.classList.remove('hidden');
+  submitButton.disabled = false;
+  boomCheckButton.disabled = false;
 }
 
-function checkFinal() {
-  let userFinal = parseInt(document.getElementById('finalGuess').value);
+function checkBoom() {
+  const userInputValue = inputNumberField.value;
+  if (userInputValue === '') {
+    inputNumberField.classList.add('border', 'border-red-500');
+    errorMessageElement.classList.add('opacity-100');
+    return;
+  }
 
-  if (userFinal === boom) {
-    document.getElementById('finalResult').textContent =
-      '✅ Awesome, You just saved the world!';
-    document.getElementsById('checkBtn').disabled = true;
-    document.getElementsById('checkFinalBtn').disabled = true;
-    // reset game
-    boom = Math.floor(Math.random() * 100) + 1;
-    console.log('Boom baru:', boom);
+  const userNumberInput = Number(inputNumberField.value);
+  if (userNumberInput === boomNumber) {
+    foundItElement.classList.add('hidden');
+    correctResultElement.classList.remove('hidden');
+    const boomNumberElement =
+      correctResultElement.querySelector('.boom-number');
+    boomNumberElement.textContent = boomNumber;
+    submitButton.disabled = true;
+    boomCheckButton.disabled = true;
   } else {
-    document.getElementById('finalResult').textContent =
-      "💥 BOOM! You're dead! The Boom Number: " + boom;
-    document.getElementById('score').innerText = '💀';
-    document.getElementsById('checkBtn').disabled = true;
-    document.getElementsById('checkFinalBtn').disabled = true;
-    // reset game
-    boom = Math.floor(Math.random() * 100) + 1;
-    console.log('New boom number:', boom);
+    foundItElement.classList.add('hidden');
+    incorrectResultElement.classList.remove('hidden');
+    const boomNumberElement =
+      incorrectResultElement.querySelector('.boom-number');
+    boomNumberElement.textContent = boomNumber;
+    submitButton.disabled = true;
+    boomCheckButton.disabled = true;
   }
 }
+
+// =============
+playAgainButton.addEventListener('click', () => {
+  reset();
+});
+submitButton.addEventListener('click', () => {
+  checkGuess();
+});
+
+boomCheckButton.addEventListener('click', () => {
+  checkBoom();
+});

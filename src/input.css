@@ -7,3 +7,17 @@
 .three-dimension-effect {
   @apply shadow-[inset_0_1px_1px_0_rgba(255,255,255,0.25),inset_0_0_20px_0_rgba(99,102,241,0.15),0_5px_5px_-5px_rgba(0,0,0,0.7)];
 }
+
+#input-number-field::-webkit-inner-spin-button,
+#input-number-field::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.glow-red {
+  @apply shadow-[inset_0_1px_1px_rgba(255,255,255,0.2),inset_0_-2px_4px_rgba(0,0,0,0.6),0_0px_30px_-4px_rgba(244,63,94,0.6)] border-red-400 bg-rose-700/70;
+}
+
+.glow-blue {
+  @apply shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),inset_0_-2px_4px_rgba(0,0,0,0.6),0_0px_30px_-4px_rgba(56,189,248,0.6)] border-blue-400 bg-sky-600/70;
+}

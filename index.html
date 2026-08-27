@@ -38,17 +38,24 @@
         <p class="text-center">I have picked a number between 1 and 100</p>
         <p>Try to guess it!</p>
       </div>
-      <div class="input-container flex w-full gap-2">
-        <input
-          type="text"
-          class="py-2 px-4 rounded-xl w-full focus:outline-none three-dimension-effect"
-          placeholder="Enter your guess..."
-        />
-        <button
-          class="rounded-lg px-2 bg-linear-to-t from-[#451da1] to-[#6438cb] cursor-pointer active:shadow-none transition font-semibold shadow-[inset_0_1px_1px_0_rgba(255,255,255,0.25),inset_0_0_20px_0_rgba(99,102,241,0.15),0_5px_5px_-5px_rgba(0,0,0,0.7)]"
-        >
-          CHECK
-        </button>
+      <div class="-mt-5 flex flex-col gap-1 w-full">
+        <p id="error-message" class="opacity-0 text-red-500">
+          Please enter your guess
+        </p>
+        <div class="input-container flex w-full gap-2">
+          <input
+            id="input-number-field"
+            type="number"
+            class="py-2 px-4 rounded-xl w-full focus:outline-none three-dimension-effect appearance-none"
+            placeholder="Enter your guess..."
+          />
+          <button
+            id="submit"
+            class="rounded-lg px-2 bg-linear-to-t from-[#451da1] to-[#6438cb] cursor-pointer active:shadow-none transition font-semibold shadow-[inset_0_1px_1px_0_rgba(255,255,255,0.25),inset_0_0_20px_0_rgba(99,102,241,0.15),0_5px_5px_-5px_rgba(0,0,0,0.7)] disabled:bg-none disabled:pointer-events-none disabled:bg-gray-500 disabled:shadow-none disabled:text-black"
+          >
+            SUBMIT
+          </button>
+        </div>
       </div>
 
       <!-- 2.2 Main Hint -->
@@ -59,7 +66,8 @@
         <div class="flex justify-between items-center gap-2 w-full">
           <!-- red box -->
           <div
-            class="too-high flex flex-col items-center justify-center gap-2 rounded-2xl border border-rose-500/60 bg-rose-950/70 p-4 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(255,255,255,0.2),inset_0_-2px_4px_rgba(0,0,0,0.6),0_8px_20px_-4px_rgba(244,63,94,0.3)] transition-all"
+            id="too-high"
+            class="flex flex-col items-center justify-center gap-2 rounded-2xl border border-rose-500/30 bg-rose-950/20 p-4 backdrop-blur-md transition-all"
           >
             <div>
               <img
@@ -73,16 +81,19 @@
 
           <!-- circle -->
           <div
-            class="question-mark flex flex-col gap-1 justify-center items-center aspect-square border-2 border-[#837bbb] bg-[#10122f] rounded-full p-4 shadow-[0_0_15px_rgba(90, 85, 140, 0.8)] shrink-0 max-w-40"
+            class="question-mark flex flex-col gap-1 justify-center items-center aspect-square border-2 border-[#837bbb] bg-[#10122f] rounded-full p-4 shadow-[0_0_15px_rgba(90, 85, 140, 0.8)] shrink-0 size-25"
           >
-            <span class="text-md font-bold text-indigo-200 drop-shadow"
-              >1 - 100</span
-            >
+            <div class="text-2xl">🩷</div>
+            <span
+              id="hp"
+              class="text-2xl font-bold text-indigo-200 drop-shadow"
+            ></span>
           </div>
 
           <!-- blue box -->
           <div
-            class="flex flex-col items-center justify-center gap-2 rounded-2xl border border-sky-500/60 bg-sky-950/70 p-4 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),inset_0_-2px_4px_rgba(0,0,0,0.6),0_8px_20px_-4px_rgba(56,189,248,0.3)] transition-all"
+            id="too-low"
+            class="flex flex-col items-center justify-center gap-2 rounded-2xl border border-sky-500/30 bg-sky-950/20 p-4 backdrop-blur-md transition-all"
           >
             <div>
               <img
@@ -99,7 +110,7 @@
       <!-- correct guess -->
       <div
         id="correct-result"
-        class="relative w-full flex-col items-center justify-center gap-3 rounded-2xl border border-emerald-400/30 bg-linear-to-b from-emerald-500/20 via-emerald-950/40 to-emerald-950/80 p-6 backdrop-blur-xl shadow-[inset_0_1px_2px_rgba(255,255,255,0.4),inset_0_-8px_12px_rgba(0,0,0,0.7),0_16px_32px_-8px_rgba(16,185,129,0.35)] transition-all hidden"
+        class="relative flex w-full flex-col items-center justify-center gap-3 rounded-2xl border border-emerald-400/30 bg-linear-to-b from-emerald-500/20 via-emerald-950/40 to-emerald-950/80 p-6 backdrop-blur-xl shadow-[inset_0_1px_2px_rgba(255,255,255,0.4),inset_0_-8px_12px_rgba(0,0,0,0.7),0_16px_32px_-8px_rgba(16,185,129,0.35)] transition-all hidden"
       >
         <img
           src="./src/assets/images/ornamen.png"
@@ -120,7 +131,8 @@
           </p>
         </div>
         <p class="font-semibold text-center">
-          34 is the
+          <span class="boom-number"></span>
+          is the
           <span class="text-[#9be073] drop-shadow-[0_0_10px_#80c359]"
             >BOOM NUMBER!</span
           >
@@ -130,7 +142,7 @@
       <!-- incorrect guess -->
       <div
         id="incorrect-result"
-        class="relative flex-col items-center justify-center gap-3 rounded-2xl border border-rose-500/30 bg-linear-to-b from-rose-500/20 via-rose-950/40 to-rose-950/80 p-6 backdrop-blur-xl shadow-[inset_0_1px_2px_rgba(255,255,255,0.4),inset_0_-8px_12px_rgba(0,0,0,0.7),0_16px_32px_-8px_rgba(244,63,94,0.35)] transition-all w-full hidden"
+        class="relative flex flex-col items-center justify-center gap-3 rounded-2xl border border-rose-500/30 bg-linear-to-b from-rose-500/20 via-rose-950/40 to-rose-950/80 p-6 backdrop-blur-xl shadow-[inset_0_1px_2px_rgba(255,255,255,0.4),inset_0_-8px_12px_rgba(0,0,0,0.7),0_16px_32px_-8px_rgba(244,63,94,0.35)] transition-all w-full hidden"
       >
         <div class="flex gap-4 items-center">
           <img
@@ -145,15 +157,17 @@
           </p>
         </div>
         <p class="font-semibold text-center">
-          34 is
-          <span class="text-[#d3584b] drop-shadow-[0_0_10px_#d3584b]">NOT</span>
-          the BOOM NUMBER!
+          <span class="boom-number"></span>
+          is the
+          <span class="text-[#d3584b] drop-shadow-[0_0_10px_#d3584b]">
+            BOOM NUMBER!
+          </span>
         </p>
       </div>
 
       <!-- before clicking check -->
       <div
-        id="see-result"
+        id="found-it"
         class="relative flex flex-col items-center justify-center gap-3 rounded-2xl border border-slate-400/20 bg-linear-to-b from-slate-500/20 via-slate-900/40 to-slate-950/80 p-6 backdrop-blur-xl shadow-[inset_0_1px_2px_rgba(255,255,255,0.3),inset_0_-8px_12px_rgba(0,0,0,0.7),0_16px_32px_-8px_rgba(0,0,0,0.5)] transition-all w-full"
       >
         <!-- Content -->
@@ -170,7 +184,7 @@
             class="text-sm font-medium text-slate-400 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
           >
             Press
-            <span class="font-bold text-slate-200">CHECK BOOM </span>Button
+            <span class="font-bold text-slate-200">BOOM CHECK </span>Button
           </p>
           <p
             class="text-sm font-medium text-slate-400 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
@@ -181,17 +195,18 @@
       </div>
       <!-- 2.3 Main Check Btn  -->
       <button
-        class="relative flex w-full flex-col items-center justify-center gap-0.5 rounded-2xl border border-amber-300/60 bg-linear-to-b from-amber-300 via-amber-400 to-amber-600 p-3.5 backdrop-blur-md shadow-[inset_0_2px_2px_rgba(255,255,255,0.7),inset_0_-4px_6px_rgba(180,83,9,0.8),0_8px_20px_rgba(245,158,11,0.4)] cursor-pointer transition-all duration-150 hover:brightness-110 active:shadow-[inset_0_3px_6px_rgba(0,0,0,0.5),0_2px_8px_rgba(245,158,11,0.3)]"
+        id="boom-check"
+        class="relative flex w-full flex-col items-center justify-center gap-0.5 rounded-2xl border border-amber-300/60 bg-linear-to-b from-amber-300 via-amber-400 to-amber-600 p-3.5 backdrop-blur-md shadow-[inset_0_2px_2px_rgba(255,255,255,0.7),inset_0_-4px_6px_rgba(180,83,9,0.8),0_8px_20px_rgba(245,158,11,0.4)] cursor-pointer transition-all duration-150 hover:brightness-110 active:shadow-[inset_0_3px_6px_rgba(0,0,0,0.5),0_2px_8px_rgba(245,158,11,0.3)] disabled:bg-none disabled:pointer-events-none disabled:bg-gray-500 disabled:shadow-none disabled:border-0"
       >
         <div class="text text-black">
-          <p class="text-xl font-bold">CHECK BOOM</p>
-          <p class="font-semibold">Is it the boom number?</p>
+          <p class="text-xl font-bold">BOOM CHECK</p>
         </div>
       </button>
     </main>
 
     <!-- 3. Play again button -->
     <button
+      id="play-again-button"
       class="container rounded-lg flex items-center justify-center gap-1 p-1 w-full bg-linear-to-t from-[#451da1] to-[#7046d1] shadow-[inset_0_1px_1px_0_rgba(255,255,255,0.25),inset_0_0_20px_0_rgba(99,102,241,0.15),0_5px_5px_-5px_rgba(0,0,0,0.7)] cursor-pointer active:shadow-none transition font-semibold text-lg max-w-105"
     >
       <img
